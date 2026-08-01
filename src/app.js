@@ -1,12 +1,23 @@
+import 'dotenv/config'
 import express, { urlencoded } from 'express';
 import { conn } from './config/databese.js';
 
 export const app = express()
 
-import './models/index.js'
+import './models/index.js' //arquivo de configurações dos models 
 
+import { AuthRouter } from './routes/authRouter.js';
+import { errorHandler } from './middlewares/errorHandler.js';
+import { configDotenv } from 'dotenv';
+
+//config do body
 app.use(express.urlencoded({
     extended: true
 }));
-
 app.use(express.json())
+
+//config das rotas 
+app.use('/auth', AuthRouter)
+
+//config do middleware de erro 
+app.use(errorHandler)
