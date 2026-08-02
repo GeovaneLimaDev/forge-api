@@ -4,7 +4,8 @@ import bcrypt from "bcryptjs";
 import {v4 as uuid} from "uuid"
 import jwt from 'jsonwebtoken'
 import crypto from "crypto"
-import { createRefreshToken } from "../repositories/sessionsRepository.js";
+import { createRefreshToken, createRefreshTokenTransaction, deleteAllTokens, getToken } from "../repositories/sessionsRepository.js";
+import { conn } from "../config/databese.js";
 
 export class AuthService{
     // rota de registro de usuário
@@ -96,5 +97,44 @@ export class AuthService{
             refreshToken: refreshToken
         }
         return messageReturn
+    }
+
+    //rota refresh, para gerar novos access e refresh tokens
+    static async refresh(token) {
+        //validar token 
+        const result = jwt.verify(token, process.env.JWT_SECRET_KEY)
+        if(result.type !== 'refresh'){
+            throw new AppError('Token type inválido!', 401, 'NOT_AUTHORIZED')
+        }
+
+        const hashTokenVerific = crypto.createHash("sha256").update(token).digest("hex")
+        const tokenDB = await getToken(hashTokenVerific)
+        if(!tokenDB) {
+            throw new AppError('Token inválido!', 401, 'NOT_AUTHORIZED')
+        }
+        //crair novos tokens 
+        const accessToken = jwt.sign({id: tokenDB.UserId, type: 'access'}, process.env.JWT_SECRET_KEY, {expiresIn: '15m'})
+        const refreshToken = jwt.sign({id: tokenDB.UserId, type: 'refresh'}, process.env.JWT_SECRET_KEY, {expiresIn: '1h'})
+
+        const transaction = await conn.transaction()
+        try {
+            //apagar tokens antigos
+            await deleteAllTokens(tokenDB.UserId, transaction)
+
+            //salvar novo token 
+            const newHashToken = crypto.createHash("sha256").update(refreshToken).digest("hex")
+            await createRefreshTokenTransaction({hashToken: newHashToken, UserId: tokenDB.UserId}, transaction)
+
+            await transaction.commit()
+            
+            //enviar novo token 
+            return {
+                accessToken: accessToken,
+                refreshToken: refreshToken
+            }
+        } catch (err) {
+            await transaction.rollback()
+            throw new AppError('Algo deu errado, tente novamente mais tarde!', 500, 'INTERNAL_PROBLEM')
+        }
     }
 }
