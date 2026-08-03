@@ -7,6 +7,7 @@ export const app = express()
 import './models/index.js' //arquivo de configurações dos models 
 
 import { AuthRouter } from './routes/authRouter.js';
+import { ProjectRouter } from './routes/projectRouter.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { configDotenv } from 'dotenv';
 
@@ -17,6 +18,7 @@ app.use(express.urlencoded({
 app.use(express.json())
 
 //config das rotas 
+app.use('/project', ProjectRouter)
 app.use('/auth', AuthRouter)
 
 //config do middleware de erro 
