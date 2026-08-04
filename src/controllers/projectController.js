@@ -37,4 +37,13 @@ export class ProjectController {
             next(err)
         }
     }
+    //rota de edição de projeto 
+    static async update(req, res, next) {
+        try {
+            const result = await ProjectService.update(req.params.projectId, req.userId, req.body)
+            res.status(200).json(result)
+        } catch (err) {
+            next(err)
+        }
+    }
 }

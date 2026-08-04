@@ -16,7 +16,7 @@ export function authToken(req, res, next) {
         if(result.type !== 'access'){
             throw new AppError('Token inválido!', 400, 'NOT_TOKEN')
         }
-
+        console.log(result.id)
         req.userId = result.id
         next()
     } catch (err) {

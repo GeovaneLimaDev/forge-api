@@ -1,5 +1,5 @@
 import { AppError } from "../config/error.js"
-import { createProject, deleteProject, getAllProject, getOneProject } from "../repositories/projectRepository.js"
+import { createProject, deleteProject, getAllProject, getOneProject, updateProject } from "../repositories/projectRepository.js"
 import { uppercaseLetters } from "../utils/uppercaseLetters.js"
 
 export class ProjectService {
@@ -74,5 +74,28 @@ export class ProjectService {
         listProject.name = newName
         //enviando para o usuário 
         return listProject
+    }
+
+    //editando um projeto
+    static async update(projectId , userId , body) {
+        //buscando no banco 
+        const projectDB = await getOneProject(projectId, userId)
+        if(!projectDB) {
+            throw new AppError('Projeto não encontrado!', 404, 'PROJECT_NOT_FOUND')
+        }
+        //criando novo objeto 
+        const newProject = {
+            name: body.name ? body.name : projectDB.name,
+            description: body.description ? body.description : projectDB.description,
+            deadline: body.deadline ? body.deadline : projectDB.deadline,
+        }
+
+        //salvando no banco
+        await updateProject(userId, projectId, newProject)
+
+        //enviando para o usuário 
+        return {
+            message: `Projeto '${projectDB.name}' atualizado!`
+        }
     }
 }

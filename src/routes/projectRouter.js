@@ -1,7 +1,7 @@
 import express from "express";
 import { authToken } from "../middlewares/authToken.js";
 import { ProjectController } from "../controllers/projectController.js";
-import { createShemas } from "../schemas.js/projectSchemas.js";
+import { createShemas, updateShemas } from "../schemas.js/projectSchemas.js";
 import validator from "../middlewares/validate.js";
 
 export const ProjectRouter = express.Router()
@@ -14,3 +14,5 @@ ProjectRouter.delete('/:projectId', authToken, ProjectController.delete)
 ProjectRouter.get('/', authToken, ProjectController.getAll)
 //rota de buscar um projesto
 ProjectRouter.get('/:projectId', authToken, ProjectController.getOne)
+//editando projeto
+ProjectRouter.patch('/:projectId', authToken, validator(updateShemas),ProjectController.update)

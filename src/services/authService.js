@@ -73,30 +73,43 @@ export class AuthService{
             throw new AppError('Senha incorreta!', 400, 'PASSWORD_WRONG')
         }
         //gerar tokens 
-        const accessToken = jwt.sign({userId: userDB.id, type: 'access'}, process.env.JWT_SECRET_KEY, {expiresIn: '15m'})
-        const refreshToken = jwt.sign({userId: userDB.id, type: 'refresh'}, process.env.JWT_SECRET_KEY, {expiresIn: '1h'})
+        const accessToken = jwt.sign({id: userDB.id, type: 'access'}, process.env.JWT_SECRET_KEY, {expiresIn: '15m'})
+        const refreshToken = jwt.sign({id: userDB.id, type: 'refresh'}, process.env.JWT_SECRET_KEY, {expiresIn: '1h'})
 
-        //cripitografando token
-        const hashToken = crypto.createHash('sha256').update(refreshToken).digest('hex')
+        const transaction = await conn.transaction()
+        try {
+            //apagar tokens antigos
+            await deleteAllTokens(userDB.id, transaction)
+            //cripitografando token
+            const hashToken = crypto.createHash('sha256').update(refreshToken).digest('hex')
+            //guardar token no banco
+                
+            const tokenData = {
+                hashToken: hashToken,
+                UserId: userDB.id
+            }
+            await createRefreshTokenTransaction(tokenData, transaction)
+
+            await transaction.commit()
+
+            //retornar mensagem
+            const messageReturn = {
+                message: 'Usuário logado!',
+                user: {
+                    userName: userDB.userName,
+                    userId: userDB.id,
+                    email: userDB.email
+                },
+                accessToken: accessToken,
+                refreshToken: refreshToken
+            }
+            return messageReturn
+        } catch (err) {
+            await transaction.rollback()
+            throw new AppError('Algo deu errado, tente novamente mais tarde!', 500, 'INTERNAL_PROBLEM')
+            console.log(err)
+        }
         
-        //guardar token no banco
-        const tokenData = {
-            hashToken: hashToken,
-            UserId: userDB.id
-        }
-        await createRefreshToken(tokenData)
-        //retornar mensagem
-        const messageReturn = {
-            message: 'Usuário logado!',
-            user: {
-                userName: userDB.userName,
-                userId: userDB.id,
-                email: userDB.email
-            },
-            accessToken: accessToken,
-            refreshToken: refreshToken
-        }
-        return messageReturn
     }
 
     //rota refresh, para gerar novos access e refresh tokens

@@ -22,3 +22,8 @@ export async function getAllProject(userId) {
     const projectList = await Project.findAll({where: {UserId: userId}})
     return projectList
 } 
+
+//editando projeto 
+export async function updateProject(userId, projectId, newProject) {
+    await Project.update(newProject, {where: {UserId: userId, id: projectId}})
+}
