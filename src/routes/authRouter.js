@@ -1,7 +1,7 @@
 import express from "express";
 import { AuthController } from "../controllers/authController.js";
 import validator from "../middlewares/validate.js";
-import { registerSchemas, logingSchemas } from "../schemas.js/authSchemas.js";
+import { registerSchemas, logingSchemas } from "../schemas/authSchemas.js";
 
 export const AuthRouter = express.Router()
 

@@ -8,6 +8,7 @@ import './models/index.js' //arquivo de configurações dos models
 
 import { AuthRouter } from './routes/authRouter.js';
 import { ProjectRouter } from './routes/projectRouter.js';
+import { DocumentationRouter } from './routes/documentationRouter.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { configDotenv } from 'dotenv';
 
@@ -18,6 +19,7 @@ app.use(express.urlencoded({
 app.use(express.json())
 
 //config das rotas 
+app.use('/project/documentation', DocumentationRouter)
 app.use('/project', ProjectRouter)
 app.use('/auth', AuthRouter)
 

@@ -1,4 +1,5 @@
 import { AppError } from "../config/error.js"
+import { createDoc } from "../repositories/documentationRepository.js"
 import { createProject, deleteProject, getAllProject, getOneProject, updateProject } from "../repositories/projectRepository.js"
 import { uppercaseLetters } from "../utils/uppercaseLetters.js"
 
@@ -12,12 +13,24 @@ export class ProjectService {
             deadline: body.deadline,
             UserId: userId
         }
-        //enviandos dados para o banco
-        const projectDB = await createProject(project)
-        //retornando mensagem de sucesso para usuário
-        return {
-            message: 'Projeto criado!',
-            project: projectDB
+
+        try {
+            //enviandos dados para o banco
+            const projectDB = await createProject(project)
+            //criando documentação do projeto
+            const documentation = {
+                title: `documetação - '${body.name}'`,
+                UserId: projectDB.UserId,
+                ProjectId: projectDB.id
+            }
+            await createDoc(documentation)
+            //retornando mensagem de sucesso para usuário
+            return {
+                message: 'Projeto criado!',
+                project: projectDB
+            }   
+        } catch (err) {
+            throw new AppError('Algo deu errado, tente novamente mais tarde!', 500, 'INTERNAL_PROBLEM')
         }
     }
 
@@ -95,7 +108,7 @@ export class ProjectService {
 
         //enviando para o usuário 
         return {
-            message: `Projeto '${projectDB.name}' atualizado!`
+            message: `Projeto atualizado!`
         }
     }
 }

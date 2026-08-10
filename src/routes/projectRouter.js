@@ -1,7 +1,7 @@
 import express from "express";
 import { authToken } from "../middlewares/authToken.js";
 import { ProjectController } from "../controllers/projectController.js";
-import { createShemas, updateShemas } from "../schemas.js/projectSchemas.js";
+import { createShemas, updateShemas } from "../schemas/projectSchemas.js";
 import validator from "../middlewares/validate.js";
 
 export const ProjectRouter = express.Router()
