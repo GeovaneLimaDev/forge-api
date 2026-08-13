@@ -2,7 +2,7 @@ import express from 'express'
 import { DocumentationController } from '../controllers/documentationController.js'
 import { authToken } from '../middlewares/authToken.js'
 import validator from '../middlewares/validate.js'
-import { updateShemas } from '../schemas/documentationShemas.js'
+import { updateShemas } from '../schemas/documentationSchemas.js'
 
 export const DocumentationRouter = express.Router()
 

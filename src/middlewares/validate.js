@@ -2,6 +2,9 @@ import { AppError } from "../config/error.js"
 
 const validator = (schema) => {
     return (req, res, next) => {
+        if(!req.body){
+            throw new AppError('Dados necessários não enviados', 400, 'LACK_OF_DATA')
+        }
         const arrayKey = Object.keys(req.body)
         if(arrayKey.length === 0){
             throw new AppError('Dados necessários não enviados', 400, 'LACK_OF_DATA')
