@@ -5,7 +5,7 @@ import {v4 as uuid} from "uuid"
 import jwt from 'jsonwebtoken'
 import crypto from "crypto"
 import { createRefreshToken, createRefreshTokenTransaction, deleteAllTokens, getToken } from "../repositories/sessionsRepository.js";
-import { conn } from "../config/databese.js";
+import { conn } from "../config/database.js";
 
 export class AuthService{
     // rota de registro de usuário
@@ -73,8 +73,8 @@ export class AuthService{
             throw new AppError('Senha incorreta!', 400, 'PASSWORD_WRONG')
         }
         //gerar tokens 
-        const accessToken = jwt.sign({id: userDB.id, type: 'access'}, process.env.JWT_SECRET_KEY, {expiresIn: '15m'})
-        const refreshToken = jwt.sign({id: userDB.id, type: 'refresh'}, process.env.JWT_SECRET_KEY, {expiresIn: '1h'})
+        const accessToken = jwt.sign({userId: userDB.id, type: 'access'}, process.env.JWT_SECRET_KEY, {expiresIn: '15m'})
+        const refreshToken = jwt.sign({userId: userDB.id, type: 'refresh'}, process.env.JWT_SECRET_KEY, {expiresIn: '1h'})
 
         const transaction = await conn.transaction()
         try {

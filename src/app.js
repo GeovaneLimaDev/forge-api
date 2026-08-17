@@ -1,6 +1,6 @@
 import 'dotenv/config'
 import express, { urlencoded } from 'express';
-import { conn } from './config/databese.js';
+import { conn } from './config/database.js';
 
 export const app = express()
 
@@ -20,8 +20,8 @@ app.use(express.urlencoded({
 app.use(express.json())
 
 //config das rotas 
-app.use('/project/note', NoteRouter)
-app.use('/project/documentation', DocumentationRouter)
+app.use('/note', NoteRouter)
+app.use('/documentation', DocumentationRouter)
 app.use('/project', ProjectRouter)
 app.use('/auth', AuthRouter)
 

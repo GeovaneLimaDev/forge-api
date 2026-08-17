@@ -1,5 +1,5 @@
 import { app } from "./app.js";
-import { conn } from "./config/databese.js";
+import { conn } from "./config/database.js";
 
 conn.sync().then(() => {
     app.listen(3000, () => {

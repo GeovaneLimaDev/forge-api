@@ -4,7 +4,7 @@ import Documentation from './Documentation.js';
 import Note from './Note.js';
 import Project from './Project.js';
 import Sessions from './Sessions.js';
-import { conn } from '../config/databese.js';
+import { conn } from '../config/database.js';
 
 //relações de User 
 User.hasMany(Project, {

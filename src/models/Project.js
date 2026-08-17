@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import { conn } from "../config/databese.js";
+import { conn } from "../config/database.js";
 
 const Project = conn.define('Project', {
     name: {

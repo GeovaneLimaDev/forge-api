@@ -17,7 +17,7 @@ export function authToken(req, res, next) {
             throw new AppError('Token inválido!', 400, 'NOT_TOKEN')
         }
         
-        req.userId = result.id
+        req.userId = result.userId
         next()
     } catch (err) {
        throw new AppError('Token inválido!', 401, 'NOT_AUTHORIZED') 

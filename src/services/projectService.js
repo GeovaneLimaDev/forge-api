@@ -72,6 +72,7 @@ export class ProjectService {
             }
         })
         //enviando pro usuário
+        const listOrder = listWithNewName.sort((a, b) => b.updatedAt - a.updatedAt) 
         return listWithNewName
     }
 
