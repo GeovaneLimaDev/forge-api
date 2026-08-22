@@ -4,4 +4,9 @@ import { z } from "zod";
 export const createAndUpdateSchemas = z.object({
     title: z.string('Titulo inválido').min(3, 'Title muito curto!').max(255, 'Máximo de caracteres para o titulo atingido').optional(),
     content: z.string('Nota inválida').optional()
-})
+}).refine(
+    (data) => data.title || data.content, 
+    {
+        message: "Dados necessários não enviados"
+    }
+)

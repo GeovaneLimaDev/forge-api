@@ -12,7 +12,8 @@ const User = conn.define('User', {
     },
     email: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true
     }
 })
 

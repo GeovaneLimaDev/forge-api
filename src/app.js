@@ -10,6 +10,7 @@ import { AuthRouter } from './routes/authRouter.js';
 import { ProjectRouter } from './routes/projectRouter.js';
 import { DocumentationRouter } from './routes/documentationRouter.js';
 import { NoteRouter } from './routes/noteRouter.js';
+import { FeatureRouter } from './routes/featureRouter.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { configDotenv } from 'dotenv';
 
@@ -20,8 +21,9 @@ app.use(express.urlencoded({
 app.use(express.json())
 
 //config das rotas 
-app.use('/note', NoteRouter)
-app.use('/documentation', DocumentationRouter)
+app.use('/project/feature', FeatureRouter)
+app.use('/project/note', NoteRouter)
+app.use('/project/documentation', DocumentationRouter)
 app.use('/project', ProjectRouter)
 app.use('/auth', AuthRouter)
 

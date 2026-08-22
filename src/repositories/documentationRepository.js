@@ -1,8 +1,8 @@
 import Documentation from "../models/Documentation.js";
 
 //criando a documentação do projeto
-export async function createDoc(data) {
-    await Documentation.create(data)
+export async function createDoc(data, transaction) {
+    await Documentation.create(data, {transaction})
 }
 
 //buscando documentação no banco

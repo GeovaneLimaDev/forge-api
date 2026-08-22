@@ -1,5 +1,5 @@
 import { AppError } from "../config/error.js"
-
+//middleware de validação do body 
 const validator = (schema) => {
     return (req, res, next) => {
         if(!req.body){

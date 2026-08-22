@@ -1,8 +1,8 @@
 import Project from "../models/Project.js";
 
 //salvando projeto no banco
-export async function createProject(newProject) {
-    const project = await Project.create(newProject)
+export async function createProject(newProject, transaction) {
+    const project = await Project.create(newProject, {transaction})
     return project
 }
 

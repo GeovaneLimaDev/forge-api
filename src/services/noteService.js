@@ -7,10 +7,6 @@ import { uppercaseLetters } from "../utils/uppercaseLetters.js"
 export class NoteService{
     //rota de criação de notas
     static async create(userId, body, projectId) {
-        //verificar se ao menos uma dos campos de criação foi enviado
-        if(!body.title & !body.content){
-            throw new AppError('Dados necessários não enviados', 400, 'LACK_OF_DATA')
-        }
         //verificando se projeto existe
         const projectDB = await getOneProject(projectId, userId)
         if(!projectDB){
@@ -33,7 +29,12 @@ export class NoteService{
     }
 
     //rota de edição das notas 
-    static async update(userId, noteId, body) {
+    static async update(userId, projectId, noteId, body) {
+        //validando existencia do projeto no banco 
+        const projectDB = getOneProject(projectId, userId)
+        if(!projectDB) { 
+            throw new AppError('Projeto não encontrada!', 404, 'PROJECT_NOT_FOUND')
+        }
         //validar existência da nota no banco
         const noteDB = await getNote(userId, noteId)
         if(!noteDB) {
@@ -53,7 +54,12 @@ export class NoteService{
     }
 
     //rota para deletar notas
-    static async delete(userId, noteId) {
+    static async delete(userId, noteId, projectId) {
+        //validando existencia do projeto no banco 
+        const projectDB = getOneProject(projectId, userId)
+        if(!projectDB) { 
+            throw new AppError('Projeto não encontrada!', 404, 'PROJECT_NOT_FOUND')
+        }
         //validar existência da nota no banco
         const noteDB = await getNote(userId, noteId)
         if(!noteDB) {
@@ -68,7 +74,12 @@ export class NoteService{
     }
 
     //rota para ler uma única nota
-    static async readOne(userId, noteId) {
+    static async readOne(userId, noteId, projectId) {
+        //validando existencia do projeto no banco 
+        const projectDB = getOneProject(projectId, userId)
+        if(!projectDB) { 
+            throw new AppError('Projeto não encontrada!', 404, 'PROJECT_NOT_FOUND')
+        }
         //validar existência da nota no banco
         const noteDB = await getNote(userId, noteId)
         if(!noteDB) {
