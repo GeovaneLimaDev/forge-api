@@ -11,8 +11,8 @@ import { ProjectRouter } from './routes/projectRouter.js';
 import { DocumentationRouter } from './routes/documentationRouter.js';
 import { NoteRouter } from './routes/noteRouter.js';
 import { FeatureRouter } from './routes/featureRouter.js';
+import { TaskRouter } from './routes/taskRouter.js';
 import { errorHandler } from './middlewares/errorHandler.js';
-import { configDotenv } from 'dotenv';
 
 //config do body
 app.use(express.urlencoded({
@@ -21,6 +21,7 @@ app.use(express.urlencoded({
 app.use(express.json())
 
 //config das rotas 
+app.use('/task', TaskRouter)
 app.use('/project/feature', FeatureRouter)
 app.use('/project/note', NoteRouter)
 app.use('/project/documentation', DocumentationRouter)

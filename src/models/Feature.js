@@ -14,6 +14,10 @@ const Feature = conn.define('Feature', {
         type: DataTypes.STRING,
         allowNull: false
     },
+    date: {
+        type: DataTypes.DATE,
+        allowNull: true
+    }
 
 })
 

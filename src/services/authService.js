@@ -13,7 +13,7 @@ export class AuthService{
         //verifica se o email já esta em uso 
         const checkEmail = await checkingUserEmail(body.email)
         if(checkEmail){
-            throw new AppError('Email já esta sendo usádo!', 400, 'EMAIL_IN_USE')
+            throw new AppError('Email já esta sendo usado!', 400, 'EMAIL_IN_USE')
         }
         //verifica se as senhas enviadas batem
         if(body.password !== body.confirmPassword){

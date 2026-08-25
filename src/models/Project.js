@@ -11,7 +11,7 @@ const Project = conn.define('Project', {
         allowNull: true
     },
     deadline: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         allowNull: true
     }
 })

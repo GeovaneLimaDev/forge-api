@@ -4,6 +4,7 @@ import Documentation from './Documentation.js';
 import Note from './Note.js';
 import Project from './Project.js';
 import Sessions from './Sessions.js';
+import Task from './Task.js';
 import { conn } from '../config/database.js';
 
 //relações de User 
@@ -20,6 +21,9 @@ User.hasMany(Documentation, {
     onDelete: 'CASCADE'
 })
 User.hasMany(Sessions, {
+    onDelete: 'CASCADE'
+})
+User.hasMany(Task, {
     onDelete: 'CASCADE'
 })
 
@@ -58,6 +62,11 @@ Documentation.belongsTo(User, {
     onDelete: 'CASCADE'
 })
 Documentation.belongsTo(Project, {
+    onDelete: 'CASCADE'
+})
+
+//relações das tasks
+Task.belongsTo(User, {
     onDelete: 'CASCADE'
 })
 

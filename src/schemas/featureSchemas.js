@@ -2,7 +2,7 @@ import z from "zod";
 
 //regras do body de criação de funcionalidades 
 export const createSchemas = z.object({
-    name: z.string('Funcionalidade inválida!').max(255, 'Máximo de caracteres para o nome da funcionalidade foi atingido1').min(3, 'O nome de uma funcionalidade deve ter o minimo de 3 caracteres'),
+    name: z.string('Funcionalidade inválida!').max(255, 'Máximo de caracteres para o nome da funcionalidade foi atingido!').min(3, 'O nome de uma funcionalidade deve ter o minimo de 3 caracteres'),
     description:  z.string('Descrição inválida').optional()
 })
 
