@@ -4,7 +4,7 @@ import { z } from "zod";
 export const createSchemas = z.object({
     name: z.string('Nome de projeto inválido').min(3, "Nome de projeto deve ter mais de 3 caracteres").max(150, 'Limite de caracteres para o nome do projeto atingido!'),
     description: z.string('Descrição inválida').max(255, 'Maximo de caracteres para a descrição do projeto atingido!').optional(),
-    deadline: z.string('Prazo inválido!').optional()
+    deadline: z.string('Prazo inválido!').regex(/^\d{4}-\d{2}-\d{2}$/, 'Parâmetro date inválido, use YYYY-MM-DD').optional()
 })
 
 //regras para o bory da rota de edição do projeto 

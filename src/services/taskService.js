@@ -1,5 +1,5 @@
 import { AppError } from "../config/error.js"
-import { createTask, deleteTask, getOneTask } from "../repositories/taskRepository.js"
+import { createTask, deleteTask, getOneTask, updateTask } from "../repositories/taskRepository.js"
 
 export class TaskService {
     //rota de criação de task
@@ -48,5 +48,26 @@ export class TaskService {
         }
         //enviando messagem para usuário
         return taskDB
+    }
+
+    //rota de update das task
+    static async update(userId, taskId, body) {
+        //validar existencia no banco 
+        const taskDB = await getOneTask(userId, taskId)
+        if(!taskDB) {
+            throw new AppError('Tarefa não encontrada!', 404, 'TASK_NOT_FOUND')
+        }
+        //manipulando novo objeto
+        const newTask = {
+            title: body.title ? body.title.trim() : taskDB.title,
+            description: body.description ? body.description : taskDB.description,
+            date: body.date ? body.date : taskDB.date,
+        } 
+        //salvando no banco 
+        await updateTask(userId, taskId, newTask)
+        //enviando mensagem para usuário
+        return {
+            message: 'Tarefa atualizada!'
+        }
     }
 }

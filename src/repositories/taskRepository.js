@@ -16,3 +16,8 @@ export async function getOneTask(userId, taskId) {
 export async function deleteTask(userId, taskId) {
     await Task.destroy({where: {UserId: userId, id: taskId}})
 }
+
+//atualizando task 
+export async function updateTask(userId, taskId, data) {
+    await Task.update(data, {where: {UserId: userId, id: taskId}})
+}

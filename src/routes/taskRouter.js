@@ -2,7 +2,7 @@ import express from 'express'
 import { TaskController } from '../controllers/taskController.js'
 import { authToken } from '../middlewares/authToken.js'
 import validator from '../middlewares/validate.js'
-import { createSchemas } from '../schemas/taskSchemas.js'
+import { createSchemas, updateSchemas } from '../schemas/taskSchemas.js'
 
 export const TaskRouter = express.Router()
 
@@ -12,3 +12,5 @@ TaskRouter.post('/', authToken, validator(createSchemas), TaskController.create)
 TaskRouter.delete('/:taskId', authToken, TaskController.delete)
 //rota de busca, para um única task
 TaskRouter.get('/:taskId', authToken, TaskController.getOne) 
+//rota de update das task
+TaskRouter.patch('/:taskId', authToken, validator(updateSchemas), TaskController.update)
