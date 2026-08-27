@@ -27,3 +27,9 @@ export async function getAllProject(userId) {
 export async function updateProject(userId, projectId, newProject) {
     await Project.update(newProject, {where: {UserId: userId, id: projectId}})
 }
+
+//buscando projetos usando a data de entrega do projeto como where
+export async function getProjectDate(date, userId) {
+    const list = await Project.findAll({where: {UserId: userId, deadline: date}})
+    return list
+}

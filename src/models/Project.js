@@ -13,6 +13,10 @@ const Project = conn.define('Project', {
     deadline: {
         type: DataTypes.DATEONLY,
         allowNull: true
+    },
+    status: {
+        type: DataTypes.STRING,
+        allowNull: false
     }
 })
 

@@ -12,6 +12,7 @@ import { DocumentationRouter } from './routes/documentationRouter.js';
 import { NoteRouter } from './routes/noteRouter.js';
 import { FeatureRouter } from './routes/featureRouter.js';
 import { TaskRouter } from './routes/taskRouter.js';
+import { DayViewRouter } from './routes/dayViewRouter.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 
 //config do body
@@ -26,6 +27,7 @@ app.use('/project/feature', FeatureRouter)
 app.use('/project/note', NoteRouter)
 app.use('/project/documentation', DocumentationRouter)
 app.use('/project', ProjectRouter)
+app.use('/day-view', DayViewRouter)
 app.use('/auth', AuthRouter)
 
 //config do middleware de erro 

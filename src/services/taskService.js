@@ -13,7 +13,8 @@ export class TaskService {
             title: body.title.trim(),
             description: body.description,
             date: body.date,
-            UserId: userId
+            UserId: userId,
+            status: 'TO_DO'
         }
         //salvando dados no banco 
         const task = await createTask(newTask)
@@ -62,6 +63,7 @@ export class TaskService {
             title: body.title ? body.title.trim() : taskDB.title,
             description: body.description ? body.description : taskDB.description,
             date: body.date ? body.date : taskDB.date,
+            status: body.status ? body.status : taskDB.status,
         } 
         //salvando no banco 
         await updateTask(userId, taskId, newTask)

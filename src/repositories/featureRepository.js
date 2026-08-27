@@ -27,3 +27,9 @@ export async function getOneFeature(projectId, featureId, userId) {
 export async function deleteFeature(projectId, featureId, userId) {
     await Feature.destroy({where: {UserId: userId, ProjectId: projectId, id: featureId}})
 }
+
+//buscando projetos usando a data de entrega do projeto como where
+export async function getFeatureDate(date, userId) {
+    const list = await Feature.findAll({where: {UserId: userId, date: date}})
+    return list
+}

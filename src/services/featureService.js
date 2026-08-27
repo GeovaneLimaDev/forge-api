@@ -1,3 +1,4 @@
+import { date } from "zod"
 import { AppError } from "../config/error.js"
 import { createFeature, deleteFeature, getAllFeature, getOneFeature, updateFeature } from "../repositories/featureRepository.js"
 import { getOneProject } from "../repositories/projectRepository.js"
@@ -55,16 +56,22 @@ export class FeatureService {
 
     //rota de atualização de feature
     static async update(userId, projectId, featureId, body) {
-        //buscando no banco 
+        //validando existencia do projeto
         const projectDB = await getOneProject(projectId, userId)
         if(!projectDB) {
             throw new AppError('Projeto não encontrado!', 404, 'PROJECT_NOT_FOUND')
         }
+        //validando existencia da feature
+        const featureDB = await getOneFeature(projectId, featureId, userId)
+        if(!featureDB) {
+            throw new AppError('Funcionalidade não encontrado!', 404, 'FEATURE_NOT_FOUND')
+        }
         //criando novo objeto 
         const newFeature = {
-            name: body.name ? body.name.trim() : projectDB.name,
-            description: body.description ? body.description : projectDB.description,
-            status: body.status ? body.status : projectDB.status,
+            name: body.name ? body.name.trim() : featureDB.name,
+            description: body.description ? body.description : featureDB.description,
+            status: body.status ? body.status : featureDB.status,
+            date: body.date ? body.date : featureDB.date,
         }
         //salvando no banco 
         await updateFeature(newFeature, featureId, projectId, userId)

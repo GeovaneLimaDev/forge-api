@@ -13,6 +13,10 @@ const Task = conn.define('Task', {
     date: {
         type: DataTypes.DATEONLY,
         allowNull: false
+    },
+    status: {
+        type: DataTypes.STRING,
+        allowNull: false
     }
 })
 

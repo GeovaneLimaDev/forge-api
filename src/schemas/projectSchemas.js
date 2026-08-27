@@ -11,9 +11,10 @@ export const createSchemas = z.object({
 export const updateSchemas = z.object({
     name: z.string('Nome de projeto inválido').min(3, "Nome de projeto deve ter mais de 3 caracteres").max(150, 'Limite de caracteres para o nome do projeto atingido!').optional(),
     description: z.string('Descrição inválida').max(255, 'Maximo de caracteres para a descrição do projeto atingido!').optional(),
-    deadline: z.string('Prazo inválido!').optional()
+    deadline: z.string('Prazo inválido!').optional(),
+    status: z.enum(['TO_DO', 'DONE'], "Status do projeto tem que ser 'TO_DO' ou 'DONE'").optional()
 }).refine(
-    (data) => data.name || data.description || data.deadline, 
+    (data) => data.name || data.description || data.deadline || data.status, 
     {
         message: "Dados necessários não enviados"
     }

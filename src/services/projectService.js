@@ -9,10 +9,11 @@ export class ProjectService {
     static async create(body, userId) {
         //criando objeto do novo projeto
         const project = {
-            name: body.name.trim().toLowerCase(),
+            name: body.name.trim(),
             description: body.description,
             deadline: body.deadline,
-            UserId: userId
+            UserId: userId,
+            status: 'TO_DO'
         }
 
         const transaction = await conn.transaction()
@@ -35,6 +36,7 @@ export class ProjectService {
             }   
         } catch (err) {
             await transaction.rollback()
+            console.log(err)
             throw new AppError('Algo deu errado, tente novamente mais tarde!', 500, 'INTERNAL_PROBLEM')
         }
     }
@@ -107,6 +109,7 @@ export class ProjectService {
             name: body.name ? body.name : projectDB.name,
             description: body.description ? body.description : projectDB.description,
             deadline: body.deadline ? body.deadline : projectDB.deadline,
+            status: body.status ? body.status : projectDB.status,
         }
 
         //salvando no banco
