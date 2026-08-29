@@ -1,5 +1,6 @@
 import 'dotenv/config'
 import express, { urlencoded } from 'express';
+import helmet from 'helmet';
 import { conn } from './config/database.js';
 
 export const app = express()
@@ -14,6 +15,9 @@ import { FeatureRouter } from './routes/featureRouter.js';
 import { TaskRouter } from './routes/taskRouter.js';
 import { DayViewRouter } from './routes/dayViewRouter.js';
 import { errorHandler } from './middlewares/errorHandler.js';
+
+//configurando helmet 
+app.use(helmet())
 
 //config do body
 app.use(express.urlencoded({

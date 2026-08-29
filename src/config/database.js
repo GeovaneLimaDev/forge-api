@@ -6,7 +6,7 @@ export const conn = new Sequelize('forge', 'root', '', {
 });
 
 try {
-    conn.authenticate();
+    await conn.authenticate();
 } catch (err) {
     console.log(err);
 };

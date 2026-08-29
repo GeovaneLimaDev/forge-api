@@ -1,7 +1,9 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import { conn } from "../config/database.js";
 
-const Documentation = conn.define('Documentation', {
+class Documentation extends Model {}
+
+Documentation.init({
     content: {
         type: DataTypes.TEXT,
         allowNull: true
@@ -10,6 +12,9 @@ const Documentation = conn.define('Documentation', {
         type: DataTypes.STRING,
         allowNull: true 
     }
+}, {
+    sequelize: conn,
+    modelName: "Documentation"
 })
 
 export default (Documentation)

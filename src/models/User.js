@@ -1,7 +1,9 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import { conn } from "../config/database.js";
 
-const User = conn.define('User', {
+class User extends Model {}
+
+User.init({
     userName: {
         type: DataTypes.STRING,
         allowNull: false
@@ -15,6 +17,9 @@ const User = conn.define('User', {
         allowNull: false,
         unique: true
     }
+}, {
+    sequelize: conn,
+    modelName: "User"
 })
 
 export default (User)

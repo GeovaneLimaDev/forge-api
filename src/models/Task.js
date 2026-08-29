@@ -1,7 +1,9 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import { conn } from "../config/database.js";
 
-const Task = conn.define('Task', {
+class Task extends Model {}
+
+Task.init({
     title: {
         type: DataTypes.STRING,
         allowNull: false
@@ -18,6 +20,9 @@ const Task = conn.define('Task', {
         type: DataTypes.STRING,
         allowNull: false
     }
+}, {
+    sequelize: conn,
+    modelName: "Task"
 })
 
 export default (Task)

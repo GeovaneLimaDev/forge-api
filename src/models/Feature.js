@@ -1,7 +1,9 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import { conn } from "../config/database.js";
 
-const Feature = conn.define('Feature', {
+class Feature extends Model {}
+
+Feature.init({
     name: {
         type: DataTypes.STRING,
         allowNull: false
@@ -19,6 +21,9 @@ const Feature = conn.define('Feature', {
         allowNull: true
     }
 
+}, {
+    sequelize: conn,
+    modelName: "Feature"
 })
 
 export default (Feature)

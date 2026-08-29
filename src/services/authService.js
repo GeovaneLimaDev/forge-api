@@ -1,7 +1,6 @@
 import { AppError } from "../config/error.js";
 import { checkingUserEmail, createUser } from "../repositories/authRepository.js";
 import bcrypt from "bcryptjs";
-import {v4 as uuid} from "uuid"
 import jwt from 'jsonwebtoken'
 import crypto from "crypto"
 import { createRefreshToken, createRefreshTokenTransaction, deleteAllTokens, getToken } from "../repositories/sessionsRepository.js";
@@ -50,9 +49,9 @@ export class AuthService{
         const messageReturn = {
             message: 'Usuário criado com sucesso',
             user: {
-                userName: userData.userName,
-                userId: userData.id,
-                email: userData.email
+                userName: user.userName,
+                userId: user.id,
+                email: user.email
             },
             accessToken: accessToken,
             refreshToken: refreshToken
@@ -107,7 +106,6 @@ export class AuthService{
         } catch (err) {
             await transaction.rollback()
             throw new AppError('Algo deu errado, tente novamente mais tarde!', 500, 'INTERNAL_PROBLEM')
-            console.log(err)
         }
         
     }
@@ -126,8 +124,8 @@ export class AuthService{
             throw new AppError('Token inválido!', 401, 'NOT_AUTHORIZED')
         }
         //crair novos tokens 
-        const accessToken = jwt.sign({id: tokenDB.UserId, type: 'access'}, process.env.JWT_SECRET_KEY, {expiresIn: '15m'})
-        const refreshToken = jwt.sign({id: tokenDB.UserId, type: 'refresh'}, process.env.JWT_SECRET_KEY, {expiresIn: '1h'})
+        const accessToken = jwt.sign({userId: tokenDB.UserId, type: 'access'}, process.env.JWT_SECRET_KEY, {expiresIn: '15m'})
+        const refreshToken = jwt.sign({userId: tokenDB.UserId, type: 'refresh'}, process.env.JWT_SECRET_KEY, {expiresIn: '1h'})
 
         const transaction = await conn.transaction()
         try {

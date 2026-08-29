@@ -16,9 +16,9 @@ export class DayViewService {
         const featureDB = await getFeatureDate(date, userId)
         //formando objeto 
         return {
-            project: projectDB.length > 0 ? projectDB : `Nenhum projeto com data de entrega definida para ${date}.`,
-            task: taskDB.length > 0 ? taskDB : `Nenhuma tarefa marcada para ser realizada em ${date}.`,
-            feature: featureDB.length > 0 ? featureDB : `Nenhuma funcionalida marcada para ser implementada em ${date}.`
+            project: projectDB,
+            task: taskDB,
+            feature: featureDB
         }
     }
 }

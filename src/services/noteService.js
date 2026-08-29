@@ -1,5 +1,4 @@
 import { AppError } from "../config/error.js"
-import Project from "../models/Project.js"
 import { createNote, deleteNote, getAllNote, getNote, updateNote } from "../repositories/noteRepository.js"
 import { getOneProject } from "../repositories/projectRepository.js"
 import { uppercaseLetters } from "../utils/uppercaseLetters.js"
@@ -31,7 +30,7 @@ export class NoteService{
     //rota de edição das notas 
     static async update(userId, projectId, noteId, body) {
         //validando existencia do projeto no banco 
-        const projectDB = getOneProject(projectId, userId)
+        const projectDB = await getOneProject(projectId, userId)
         if(!projectDB) { 
             throw new AppError('Projeto não encontrada!', 404, 'PROJECT_NOT_FOUND')
         }
@@ -56,7 +55,7 @@ export class NoteService{
     //rota para deletar notas
     static async delete(userId, noteId, projectId) {
         //validando existencia do projeto no banco 
-        const projectDB = getOneProject(projectId, userId)
+        const projectDB = await getOneProject(projectId, userId)
         if(!projectDB) { 
             throw new AppError('Projeto não encontrada!', 404, 'PROJECT_NOT_FOUND')
         }
@@ -76,7 +75,7 @@ export class NoteService{
     //rota para ler uma única nota
     static async readOne(userId, noteId, projectId) {
         //validando existencia do projeto no banco 
-        const projectDB = getOneProject(projectId, userId)
+        const projectDB = await getOneProject(projectId, userId)
         if(!projectDB) { 
             throw new AppError('Projeto não encontrada!', 404, 'PROJECT_NOT_FOUND')
         }

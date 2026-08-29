@@ -1,11 +1,16 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import { conn } from "../config/database.js";
 
-const Sessions = conn.define('Sessions', {
+class Sessions extends Model {}
+
+Sessions.init({
     hashToken: {
         type: DataTypes.STRING,
         allowNull: false
     }
+}, {
+    sequelize: conn,
+    modelName: "Sessions"
 })
 
 export default (Sessions)

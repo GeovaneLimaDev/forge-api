@@ -1,7 +1,9 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import { conn } from "../config/database.js";
 
-const Project = conn.define('Project', {
+class Project extends Model {}
+
+Project.init({
     name: {
         type: DataTypes.STRING,
         allowNull: false
@@ -18,6 +20,9 @@ const Project = conn.define('Project', {
         type: DataTypes.STRING,
         allowNull: false
     }
+}, {
+    sequelize: conn,
+    modelName: "Project"
 })
 
 export default (Project)
