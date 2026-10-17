@@ -148,7 +148,7 @@ npm test
 
 - [x] Autenticação
 - [x] Projetos, documentação, notas e funcionalidades
-- [x] Agenda do dia e histórico
+- [x] Agenda do dia
 - [ ] Funcionalidade de IA (Planejar Projeto)
 - [ ] Testes automatizados
 - [ ] Documentação com Swagger
