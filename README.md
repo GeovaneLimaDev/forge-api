@@ -138,12 +138,12 @@ Cada projeto tem uma única documentação, por isso não há rotas de criação
 | GET | `/day-view?date=YYYY-MM-DD` | Reúne tarefas, funcionalidades e projetos da data informada, com o campo `type` em cada item |
  
 
-## Testes
+<!--## Testes
 
 ```bash
 npm test
 ```
-
+-->
 ## Status
 
 - [x] Autenticação
